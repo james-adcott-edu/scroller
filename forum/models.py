@@ -7,6 +7,7 @@ class Community(models.Model):
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities')
+    subscribers = models.ManyToManyField(User, related_name='subscribed_communities', blank=True)
 
     def __str__(self):
         return self.name
