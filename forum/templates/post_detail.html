@@ -3,7 +3,7 @@
 {% block content %}
 <div class="post-detail-container">
     <h2>{{ post.title|escape }}</h2>
-    <p>{{ post.content|linebreaks|escape }}</p>
+    <p>{{ post.rendered_content|safe }}</p>
     <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
 
     <hr>

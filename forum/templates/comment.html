@@ -1,5 +1,5 @@
 <div class="comment">
-    <p><strong>{{ comment.created_by.username }}</strong> said: {{ comment.content|linebreaks|escape }}</p>
+    <p><strong>{{ comment.created_by.username }}</strong> said: {{ comment.rendered_content|safe }}</p>
     <p>Posted on {{ comment.created_at }}</p>
     {% if user == comment.created_by or user.is_staff %}
         <a href="{% url 'edit_comment' comment.id %}">Edit</a>

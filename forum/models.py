@@ -86,6 +86,11 @@ class Profile(models.Model):
     display_name = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
 
+    @property
+    def rendered_description(self):
+        from .utils import render_markdown
+        return render_markdown(self.description)
+    
     def __str__(self):
         return self.user.username
 

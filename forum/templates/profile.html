@@ -2,15 +2,15 @@
 
 {% block content %}
 <h1>{{ profile.display_name|default:profile.user.username }}</h1>
-<p>{{ profile.description }}</p>
+<p>{{ profile.rendered_description|safe }}</p>
 <a href="{% url 'edit_profile' %}">Edit Profile</a>
 
 <h2>Posts</h2>
 <ul>
     {% for post in posts %}
     <li>
-        <h3>{{ post.title }}</h3>
-        <p>{{ post.content }}</p>
+        <h3>{{ post.title|escape }}</h3>
+        <p>{{ post.rendered_content|safe }}</p>
         <p>Posted in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
         <a href="{% url 'post_detail' post.community.slug post.id %}">Read more</a>
     </li>
