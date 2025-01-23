@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import CommunityForm, PostForm
-from .models import Community, Post
+from django.contrib.auth.models import User
+from .forms import CommunityForm, PostForm, ProfileForm
+from .models import Community, Post, Profile
 
 def all_posts(request):
     posts = Post.objects.all().order_by('-created_at')
@@ -63,3 +64,21 @@ def post_detail(request, community_slug, post_id):
     post = get_object_or_404(Post, pk=post_id, community=community)
     return render(request, 'post_detail.html', {'post': post})
 
+
+def profile_view(request, username):
+    user = get_object_or_404(User, username=username)
+    profile = user.profile
+    posts = Post.objects.filter(created_by=user).order_by('-created_at')
+    return render(request, 'profile.html', {'profile': profile, 'posts': posts})
+
+@login_required
+def edit_profile(request):
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, instance=request.user.profile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_view', username=request.user.username)
+    else:
+        form = ProfileForm(instance=request.user.profile)
+
+    return render(request, 'edit_profile.html', {'form': form})
