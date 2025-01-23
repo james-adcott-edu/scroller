@@ -5,9 +5,17 @@
 </head>
 <body>
     <header>
-        <h1>Community Platform</h1>
+        <h1>Thing. Woo.</h1>
         <nav>
             <a href="{% url 'all_posts' %}">All Posts</a>
+        {% if user.is_authenticated %}
+            <p>Welcome, {{ user.username }}!</p>
+            <a href="{% url 'account_logout' %}">Logout</a>
+            <a href="{% url 'create_community' %}">Create Community</a>
+        {% else %}
+            <a href="{% url 'account_login' %}">Login</a>
+            <a href="{% url 'account_signup' %}">Sign Up</a>
+        {% endif %}
         </nav>
     </header>
     <main>
@@ -15,7 +23,7 @@
         {% endblock %}
     </main>
     <footer>
-        <p>&copy; 2025 Community Platform</p>
+        <p>This is a page footer</p>
     </footer>
 </body>
 </html>
