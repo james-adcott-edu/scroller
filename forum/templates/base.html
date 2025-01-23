@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Community Platform</title>
+    <title>Scroller</title>
+    <style>
+        .comment > .replies {
+            margin-left: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -17,13 +22,11 @@
             <a href="{% url 'account_signup' %}">Sign Up</a>
         {% endif %}
         </nav>
+        <hr>
     </header>
     <main>
         {% block content %}
         {% endblock %}
     </main>
-    <footer>
-        <p>This is a page footer</p>
-    </footer>
 </body>
 </html>

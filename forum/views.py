@@ -4,6 +4,12 @@ from django.contrib.auth.models import User
 from .forms import CommunityForm, PostForm, ProfileForm, CommentForm
 from .models import Community, Post, Profile, Comment
 
+
+
+def is_admin(user):
+    return user.is_staff
+    
+
 def all_posts(request):
     posts = Post.objects.all().order_by('-created_at')
     return render(request, 'all_posts.html', {'posts': posts})
@@ -59,6 +65,7 @@ def community_detail(request, slug):
     return render(request, 'community_detail.html', {'community': community, 'posts': posts, 'form': form})
 
 
+
 def post_detail(request, community_slug, post_id):
     community = get_object_or_404(Community, slug=community_slug)
     post = get_object_or_404(Post, pk=post_id, community=community)
@@ -82,6 +89,34 @@ def post_detail(request, community_slug, post_id):
         form = CommentForm()
 
     return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
+
+@login_required
+def edit_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user != comment.created_by and not request.user.is_staff:
+        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+    else:
+        form = CommentForm(instance=comment)
+
+    return render(request, 'edit_comment.html', {'form': form, 'comment': comment})
+
+@login_required
+def delete_comment(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    if request.user != comment.created_by and not request.user.is_staff:
+        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+
+    if request.method == 'POST':
+        comment.delete()
+        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+
+    return render(request, 'delete_comment.html', {'comment': comment})
 
 
 def profile_view(request, username):

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Delete Comment</h1>
+<p>Are you sure you want to delete this comment?</p>
+<p>{{ comment.content }}</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Delete</button>
+    <a href="{% url 'post_detail' comment.post.community.slug comment.post.id %}">Cancel</a>
+</form>
+{% endblock %}

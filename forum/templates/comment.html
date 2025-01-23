@@ -1,13 +1,14 @@
 <div class="comment">
     <p><strong>{{ comment.created_by.username }}</strong> said: {{ comment.content }}</p>
     <p>Posted on {{ comment.created_at }}</p>
-    <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
+    {% if user == comment.created_by or user.is_staff %}
+        <a href="{% url 'edit_comment' comment.id %}">Edit</a>
+        <a href="{% url 'delete_comment' comment.id %}">Delete</a>
+    {% endif %}
 
-    <div class="replies">
-        {% for reply in comment.replies.all %}
-            {% include 'comment.html' with comment=reply %}
-        {% endfor %}
-    </div>
+    {% if user.is_authenticated %}
+    <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
+    {% endif %}
 
     <div class="reply-form" id="reply-form-{{ comment.id }}" style="display:none;">
         <form method="post" action="{% url 'post_detail' post.community.slug post.id %}">
@@ -16,6 +17,12 @@
             <input type="hidden" name="parent_id" value="{{ comment.id }}">
             <button type="submit">Reply</button>
         </form>
+    </div>
+    
+    <div class="replies">
+        {% for reply in comment.replies.all %}
+            {% include 'comment.html' with comment=reply %}
+        {% endfor %}
     </div>
 </div>
 
