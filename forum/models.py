@@ -1,13 +1,32 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.utils.text import slugify
+from django.core.validators import RegexValidator, MaxLengthValidator
 
 
 class Community(models.Model):
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(
+        max_length=25,
+        unique=True,
+        validators=[
+            RegexValidator(
+                regex='^[a-z_]+$',
+                message='Community name must be lowercase ASCII letters and underscores only.',
+                code='invalid_name'
+            ),
+            MaxLengthValidator(25)
+        ]
+    )
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='communities')
     subscribers = models.ManyToManyField(User, related_name='subscribed_communities', blank=True)
+    slug = models.SlugField(unique=True, max_length=25, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name

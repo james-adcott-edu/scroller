@@ -7,7 +7,7 @@
     <li>
         <h3>{{ post.title }}</h3>
         <p>{{ post.content }}</p>
-        <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.id %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
+        <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
     </li>
     {% endfor %}
 </ul>

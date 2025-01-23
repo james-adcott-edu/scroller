@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
-from .forms import CommunityForm
+from .forms import CommunityForm, PostForm
 from .models import Community, Post
 
 def all_posts(request):
@@ -27,3 +27,28 @@ def create_community(request):
         form = CommunityForm()
     
     return render(request, 'create_community.html', {'form': form})
+
+@login_required
+def community_detail(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    posts = Post.objects.filter(community=community).order_by('-created_at')
+
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.created_by = request.user
+            post.community = community
+            post.save()
+            return redirect('community_detail', slug=community.slug)
+    else:
+        form = PostForm()
+
+    return render(request, 'community_detail.html', {'community': community, 'posts': posts, 'form': form})
+
+
+def post_detail(request, community_slug, post_id):
+    community = get_object_or_404(Community, slug=community_slug)
+    post = get_object_or_404(Post, pk=post_id, community=community)
+    return render(request, 'post_detail.html', {'post': post})
+
