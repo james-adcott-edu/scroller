@@ -1,0 +1,7 @@
+body {
+    background: #CFF;
+}
+
+.comment > .replies {
+    margin-left: 20px;
+}
