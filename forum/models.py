@@ -23,6 +23,11 @@ class Community(models.Model):
     subscribers = models.ManyToManyField(User, related_name='subscribed_communities', blank=True)
     slug = models.SlugField(unique=True, max_length=25, blank=True)
 
+    @property
+    def rendered_description(self):
+        from .utils import render_markdown
+        return render_markdown(self.description)
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -42,6 +47,11 @@ class Post(models.Model):
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
 
+    @property
+    def rendered_content(self):
+        from .utils import render_markdown
+        return render_markdown(self.content)
+
     def score(self):
         return self.upvotes.count() - self.downvotes.count()
 
@@ -58,6 +68,11 @@ class Comment(models.Model):
     parent_comment = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE, related_name='replies')
     upvotes = models.ManyToManyField(User, related_name='upvoted_comments', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_comments', blank=True)
+
+    @property
+    def rendered_content(self):
+        from .utils import render_markdown
+        return render_markdown(self.content)
 
     def score(self):
         return self.upvotes.count() - self.downvotes.count()
