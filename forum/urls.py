@@ -2,7 +2,8 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('', views.all_posts, name='all_posts'),
+    path('', views.home, name='home'),  # Home page
+    path('all/', views.all_posts, name='all_posts'),  # All posts
     path('accounts/', include('allauth.urls')),  # Add this line for allauth
     path('create_community/', views.create_community, name='create_community'),
     path('community/<slug:slug>/', views.community_detail, name='community_detail'),

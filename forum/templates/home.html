@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Home</h1>
+<ul>
+    {% for post in posts %}
+    <li>
+        <h3>{{ post.title }}</h3>
+        <p>{{ post.content }}</p>
+        <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
+        <a href="{% url 'post_detail' post.community.slug post.id %}">Read more</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
