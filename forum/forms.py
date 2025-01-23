@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Community, Profile
+from .models import Post, Community, Profile, Comment
 
 class CommunityForm(forms.ModelForm):
     class Meta:
@@ -15,3 +15,11 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['display_name', 'description']
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['content']
+        widgets = {
+            'content': forms.Textarea(attrs={'rows': 3, 'placeholder': 'Add a comment...'}),
+        }

@@ -1,0 +1,30 @@
+<div class="comment">
+    <p><strong>{{ comment.created_by.username }}</strong> said: {{ comment.content }}</p>
+    <p>Posted on {{ comment.created_at }}</p>
+    <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
+
+    <div class="replies">
+        {% for reply in comment.replies.all %}
+            {% include 'comment.html' with comment=reply %}
+        {% endfor %}
+    </div>
+
+    <div class="reply-form" id="reply-form-{{ comment.id }}" style="display:none;">
+        <form method="post" action="{% url 'post_detail' post.community.slug post.id %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+            <button type="submit">Reply</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.reply-link').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            const commentId = this.dataset.commentId;
+            document.getElementById('reply-form-' + commentId).style.display = 'block';
+        });
+    });
+</script>
