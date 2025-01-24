@@ -153,6 +153,32 @@ def profile_view(request, username):
 
     return render(request, 'profile.html', {'profile': profile, 'posts': posts, 'form': form})
 
+
+def user_post_detail(request, username, post_id):
+    user = get_object_or_404(User, username=username)
+    post = get_object_or_404(Post, id=post_id, created_by=user, community__isnull=True)
+    comments = post.comments.filter(parent_comment__isnull=True).order_by('-created_at')
+    
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = CommentForm(request.POST)
+            if form.is_valid():
+                comment = form.save(commit=False)
+                comment.post = post
+                comment.created_by = request.user
+                parent_id = request.POST.get('parent_id')
+                if parent_id:
+                    comment.parent_comment = Comment.objects.get(id=parent_id)
+                comment.save()
+                return redirect('user_post_detail', username=username, post_id=post.id)
+        else:
+            return redirect('account_login')
+    else:
+        form = CommentForm()
+
+    return render(request, 'user_post_detail.html', {'post': post, 'comments': comments, 'form': form})
+    
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':

@@ -9,6 +9,7 @@ urlpatterns = [
     path('c/<slug:slug>/', views.community_detail, name='community_detail'),
     path('c/<slug:community_slug>/<int:post_id>/', views.post_detail, name='post_detail'),
     path('u/<str:username>/', views.profile_view, name='profile_view'),  # Profile view
+    path('u/<str:username>/<int:post_id>/', views.user_post_detail, name='user_post_detail'),  # User post detail
     path('editprofile', views.edit_profile, name='edit_profile'),  # Edit profile
     path('comment/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),  # Edit comment
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),  # Delete comment
