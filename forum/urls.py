@@ -12,4 +12,6 @@ urlpatterns = [
     path('editprofile', views.edit_profile, name='edit_profile'),  # Edit profile
     path('comment/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),  # Edit comment
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),  # Delete comment
+    path('c/<slug:slug>/subscribe/', views.subscribe, name='subscribe'),  # Subscribe to community
+    path('c/<slug:slug>/unsubscribe/', views.unsubscribe, name='unsubscribe'),  # Unsubscribe from community
 ]

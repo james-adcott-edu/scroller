@@ -5,6 +5,20 @@
     <h2>{{ community.name }}</h2>
     <p>{{ community.rendered_description|safe }}</p>
     <p>Created by {{ community.created_by.username }} on {{ community.created_at }}</p>
+
+    {% if user.is_authenticated %}
+        {% if is_subscribed %}
+            <form method="post" action="{% url 'unsubscribe' community.slug %}">
+                {% csrf_token %}
+                <button type="submit">Unsubscribe</button>
+            </form>
+        {% else %}
+            <form method="post" action="{% url 'subscribe' community.slug %}">
+                {% csrf_token %}
+                <button type="submit">Subscribe</button>
+            </form>
+        {% endif %}
+    {% endif %}
     
     <h3>Posts</h3>
     <ul>

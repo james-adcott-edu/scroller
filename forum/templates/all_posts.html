@@ -8,7 +8,7 @@
         <h3>{{ post.title|escape }}</h3>
         <p>{{ post.rendered_content|safe }}</p>
         <p>Posted by <a href="{% url 'profile_view' post.created_by.username %}"> {{post.created_by.username}}</a>
-            in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a>
+            {% if post.community %} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> {% endif %}
             on {{ post.created_at }}</p>
     </li>
     {% endfor %}

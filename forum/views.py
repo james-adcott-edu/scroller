@@ -47,6 +47,9 @@ def create_community(request):
 def community_detail(request, slug):
     community = get_object_or_404(Community, slug=slug)
     posts = Post.objects.filter(community=community).order_by('-created_at')
+    is_subscribed = False
+    if request.user.is_authenticated:
+        is_subscribed = community.subscribers.filter(id=request.user.id).exists()
 
     if request.method == 'POST':
         if request.user.is_authenticated:
@@ -62,7 +65,20 @@ def community_detail(request, slug):
     else:
         form = PostForm()
 
-    return render(request, 'community_detail.html', {'community': community, 'posts': posts, 'form': form})
+    return render(request, 'community_detail.html', {'community': community, 'posts': posts, 'form': form, 'is_subscribed': is_subscribed})
+
+
+@login_required
+def subscribe(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    community.subscribers.add(request.user)
+    return redirect('community_detail', slug=slug)
+
+@login_required
+def unsubscribe(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    community.subscribers.remove(request.user)
+    return redirect('community_detail', slug=slug)
 
 
 
