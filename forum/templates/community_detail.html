@@ -3,7 +3,7 @@
 {% block content %}
 <div class="community-detail-container">
     <h2>{{ community.name }}</h2>
-    <p>{{ community.rendered_description }}</p>
+    <p>{{ community.rendered_description|safe }}</p>
     <p>Created by {{ community.created_by.username }} on {{ community.created_at }}</p>
     
     <h3>Posts</h3>

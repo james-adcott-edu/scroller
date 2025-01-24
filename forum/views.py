@@ -123,7 +123,19 @@ def profile_view(request, username):
     user = get_object_or_404(User, username=username)
     profile = user.profile
     posts = Post.objects.filter(created_by=user).order_by('-created_at')
-    return render(request, 'profile.html', {'profile': profile, 'posts': posts})
+
+    if request.method == 'POST':
+        if request.user.is_authenticated:
+            form = PostForm(request.POST)
+            if form.is_valid():
+                post = form.save(commit=False)
+                post.created_by = request.user
+                post.save()
+                return redirect('profile_view', username=username)
+    else:
+        form = PostForm()
+
+    return render(request, 'profile.html', {'profile': profile, 'posts': posts, 'form': form})
 
 @login_required
 def edit_profile(request):

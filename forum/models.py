@@ -43,7 +43,8 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='posts')
+    # community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='posts')
+    community = models.ForeignKey(Community, null=True, blank=True, on_delete=models.CASCADE, related_name='posts')
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
 

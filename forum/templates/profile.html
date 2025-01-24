@@ -11,9 +11,20 @@
     <li>
         <h3>{{ post.title|escape }}</h3>
         <p>{{ post.rendered_content|safe }}</p>
-        <p>Posted in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
-        <a href="{% url 'post_detail' post.community.slug post.id %}">Read more</a>
+        <p>{% if post.community %} Posted in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> {% endif %}
+             on {{ post.created_at }}</p>
+        {% if post.community %} <a href="{% url 'post_detail' post.community.slug post.id %}">Read more</a> {% endif %}
     </li>
     {% endfor %}
 </ul>
+
+{% if user.is_authenticated and user == profile.user %}
+<h2>Add a New Post</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Post</button>
+</form>
+{% endif %}
 {% endblock %}
+
