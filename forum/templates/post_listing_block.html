@@ -1,0 +1,25 @@
+<li class="post_listing">
+<div class="post_listing_title">
+    {% if post.community %}
+    <a href="{% url 'post_detail' post.community.slug post.id %}">{{ post.title|escape }}</a>
+    {% else %}
+    <a href="{% url 'user_post_detail' post.created_by.username post.id %}">{{ post.title|escape }}</a>
+    {% endif %}
+</div>
+<div class="post_listing_datetime">{{ post.created_at }}</div>
+<div class="post_listing_location">
+    {% if post.community %}
+    <span class="post_listing_community">
+        Posted in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name|escape }}</a>
+    </span>
+    {% else %}
+    <span class="post_listing_blogtext">Blog post</span>
+    {% endif %}
+    <span class="post_listing_user">
+        by <a href="{% url 'profile_view' post.created_by.username %}">{{ post.created_by.username|escape }}</a>
+    </span>
+</div>
+<div class="post_listing_comments">
+    Comments: {{ post.comment_count }}
+</div>
+</li>
