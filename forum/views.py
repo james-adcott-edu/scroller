@@ -37,7 +37,7 @@ def create_community(request):
                 community = form.save(commit=False)
                 community.created_by = request.user
                 community.save()
-                return redirect('community_detail', community.id)
+                return redirect('community_detail', community.name)
     else:
         form = CommunityForm()
     

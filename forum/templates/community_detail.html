@@ -1,7 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="community-detail-container">
+<div class="content">
+<h3>Posts</h3>
+<ul>
+    {% for post in posts %}
+        {% include 'post_listing_block.html' %}
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
     <h2>{{ community.name }}</h2>
     <p>{{ community.rendered_description|safe }}</p>
     <p>Created by {{ community.created_by.username }} on {{ community.created_at }}</p>
@@ -19,13 +30,6 @@
             </form>
         {% endif %}
     {% endif %}
-    
-    <h3>Posts</h3>
-    <ul>
-        {% for post in posts %}
-            {% include 'post_listing_block.html' %}
-        {% endfor %}
-    </ul>
 
     {% if user.is_authenticated %}
     <h3>New Post</h3>
