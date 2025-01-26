@@ -1,4 +1,8 @@
 <li class="post_listing">
+    <div class="icon usericon"><svg width="80" height="80" data-jdenticon-value="user-{{ post.created_by.username }}"></svg></div>
+    {% if post.community %}
+    <div class="icon communityicon"><svg width="80" height="80" data-jdenticon-value="comm-{{ post.community.slug }}"></svg></div>
+    {% endif %}
 <div class="post_listing_title">
     {% if post.community %}
     <a href="{% url 'post_detail' post.community.slug post.id %}">{{ post.title|escape }}</a>

@@ -2,9 +2,5 @@
 
 {% block content %}
 <h1>All Posts</h1>
-<ul>
-    {% for post in posts %}
-        {% include 'post_listing_block.html' %}
-    {% endfor %}
-</ul>
+{% include 'post_list.html' %}
 {% endblock %}
