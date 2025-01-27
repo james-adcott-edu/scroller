@@ -72,7 +72,7 @@ def subscribe_profile(request, profile_id):
     if request.user.is_authenticated:
         profile.subscribers.add(request.user)
         profile.save()
-        return HttpResponse('<button id="subscription-button" hx-post="{% url \'unsubscribe_profile\' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Unsubscribe</button>')
+        return render(request, 'subscription_button.html', {'user': request.user, 'profile':profile})
     return redirect('login')
 
 def unsubscribe_profile(request, profile_id):
@@ -80,7 +80,7 @@ def unsubscribe_profile(request, profile_id):
     if request.user.is_authenticated:
         profile.subscribers.remove(request.user)
         profile.save()
-        return HttpResponse('<button id="subscription-button" hx-post="{% url \'subscribe_profile\' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Subscribe</button>')
+        return render(request, 'subscription_button.html', {'user': request.user, 'profile':profile})
     return redirect('login')
 
 

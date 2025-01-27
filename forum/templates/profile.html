@@ -10,11 +10,7 @@
     <h1>{{ profile.display_name|default:profile.user.username }}</h1>
     <p>{{ profile.rendered_description|safe }}</p>
 
-    {% if user in profile.subscribers.all %}
-    <button id="subscription-button" hx-post="{% url 'unsubscribe_profile' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Unsubscribe</button>
-    {% else %}
-    <button id="subscription-button" hx-post="{% url 'subscribe_profile' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Subscribe</button>
-    {% endif %}
+    {% include 'subscription_button.html' %}
 
     {% if user.is_authenticated and user == profile.user %}
 
