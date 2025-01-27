@@ -107,6 +107,26 @@ def post_detail(request, community_slug, post_id):
     return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
 
 @login_required
+def edit_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id, created_by=request.user)
+    if request.method == 'POST':
+        form = PostForm(request.POST, instance=post)
+        if form.is_valid():
+            form.save()
+            return redirect('post_detail', post_id=post.id)
+    else:
+        form = PostForm(instance=post)
+    return render(request, 'edit_post.html', {'form': form, 'post': post})
+
+@login_required
+def delete_post(request, post_id):
+    post = get_object_or_404(Post, id=post_id, created_by=request.user)
+    if request.method == 'POST':
+        post.delete()
+        return redirect('all_posts')
+    return render(request, 'delete_post.html', {'post': post})
+
+@login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.user != comment.created_by and not request.user.is_staff:
