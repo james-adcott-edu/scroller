@@ -18,4 +18,7 @@ urlpatterns = [
     path('comment/<int:comment_id>/', views.comment_partial, name='comment_partial'), # Comment Partial
     path('c/<slug:slug>/subscribe/', views.subscribe, name='subscribe'),  # Subscribe to community
     path('c/<slug:slug>/unsubscribe/', views.unsubscribe, name='unsubscribe'),  # Unsubscribe from community
+    path('profile/<int:profile_id>/subscribe/', views.subscribe_profile, name='subscribe_profile'),
+    path('profile/<int:profile_id>/unsubscribe/', views.unsubscribe_profile, name='unsubscribe_profile'),
+    path('subscriptions/', views.subscriptions, name='subscriptions'),  # List subscriptions
 ]

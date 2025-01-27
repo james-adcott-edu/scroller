@@ -14,13 +14,74 @@ def all_posts(request):
     posts = Post.objects.all().order_by('-created_at')
     return render(request, 'all_posts.html', {'posts': posts, 'title': 'All Posts'})
 
-def home(request):
+'''def home(request):
     if request.user.is_authenticated:
         communities = request.user.subscribed_communities.all()
         posts = Post.objects.filter(community__in=communities).order_by('-created_at')
     else:
         posts = Post.objects.all().order_by('-created_at')
+    return render(request, 'home.html', {'posts': posts})'''
+
+def home(request):
+    if request.user.is_authenticated:
+        # Get the communities the user is subscribed to
+        communities = request.user.subscribed_communities.all()
+        
+        # Get the users the user is subscribed to
+        subscribed_profiles = request.user.subscribed_users.all()
+        
+        # Get the users from the subscribed profiles
+        subscribed_users = User.objects.filter(profile__in=subscribed_profiles)
+        
+        # Get posts from subscribed communities
+        community_posts = Post.objects.filter(community__in=communities).order_by('-created_at')
+        
+        # Get posts from subscribed user profiles with no community
+        user_posts = Post.objects.filter(community__isnull=True, created_by__in=subscribed_users).order_by('-created_at')
+        
+        # Combine the two querysets
+        posts = community_posts | user_posts
+        posts = posts.distinct().order_by('-created_at')
+    else:
+        posts = Post.objects.all().order_by('-created_at')
+    
     return render(request, 'home.html', {'posts': posts})
+
+def subscriptions(request):
+    if request.user.is_authenticated:
+        # Get the communities the user is subscribed to
+        subscribed_communities = request.user.subscribed_communities.all()
+        
+        # Get the profiles the user is subscribed to
+        subscribed_profiles = request.user.subscribed_users.all()
+        
+        context = {
+            'subscribed_communities': subscribed_communities,
+            'subscribed_profiles': subscribed_profiles,
+        }
+    else:
+        context = {
+            'subscribed_communities': [],
+            'subscribed_profiles': [],
+        }
+    
+    return render(request, 'subscriptions.html', context)
+
+def subscribe_profile(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    if request.user.is_authenticated:
+        profile.subscribers.add(request.user)
+        profile.save()
+        return HttpResponse('<button id="subscription-button" hx-post="{% url \'unsubscribe_profile\' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Unsubscribe</button>')
+    return redirect('login')
+
+def unsubscribe_profile(request, profile_id):
+    profile = get_object_or_404(Profile, id=profile_id)
+    if request.user.is_authenticated:
+        profile.subscribers.remove(request.user)
+        profile.save()
+        return HttpResponse('<button id="subscription-button" hx-post="{% url \'subscribe_profile\' profile.id %}" hx-target="#subscription-button" hx-swap="outerHTML">Subscribe</button>')
+    return redirect('login')
 
 
 @login_required

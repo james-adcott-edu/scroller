@@ -43,7 +43,6 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
-    # community = models.ForeignKey(Community, on_delete=models.CASCADE, related_name='posts')
     community = models.ForeignKey(Community, null=True, blank=True, on_delete=models.CASCADE, related_name='posts')
     upvotes = models.ManyToManyField(User, related_name='upvoted_posts', blank=True)
     downvotes = models.ManyToManyField(User, related_name='downvoted_posts', blank=True)
@@ -89,6 +88,8 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     display_name = models.CharField(max_length=100, blank=True)
     description = models.TextField(blank=True)
+    subscribers = models.ManyToManyField(User, related_name='subscribed_users', blank=True)
+
 
     @property
     def rendered_description(self):

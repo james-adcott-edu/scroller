@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>My Subscriptions</h1>
+
+<h2>Subscribed Communities</h2>
+{% if subscribed_communities %}
+    <ul>
+        {% for community in subscribed_communities %}
+            <li>{{ community.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not subscribed to any communities.</p>
+{% endif %}
+
+<h2>Subscribed Profiles</h2>
+{% if subscribed_profiles %}
+    <ul>
+        {% for profile in subscribed_profiles %}
+            <li>{{ profile.user.username }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not subscribed to any profiles.</p>
+{% endif %}
+
+{% endblock %}
