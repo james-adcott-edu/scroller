@@ -1,14 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="content">
-<h3>Posts</h3>
-<ul>
-    {% for post in posts %}
-        {% include 'post_listing_block.html' %}
-    {% endfor %}
-</ul>
-</div>
+    {% include 'post_list.html' %}
 {% endblock %}
 
 {% block sidebar %}
@@ -43,3 +36,4 @@
     {% endif %}
 </div>
 {% endblock %}
+
