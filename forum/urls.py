@@ -15,6 +15,7 @@ urlpatterns = [
     path('post/<int:post_id>/delete/', views.delete_post, name='delete_post'),   # Delete post
     path('comment/<int:comment_id>/edit/', views.edit_comment, name='edit_comment'),  # Edit comment
     path('comment/<int:comment_id>/delete/', views.delete_comment, name='delete_comment'),  # Delete comment
+    path('comment/<int:comment_id>/', views.comment_partial, name='comment_partial'), # Comment Partial
     path('c/<slug:slug>/subscribe/', views.subscribe, name='subscribe'),  # Subscribe to community
     path('c/<slug:slug>/unsubscribe/', views.unsubscribe, name='unsubscribe'),  # Unsubscribe from community
 ]

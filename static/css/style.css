@@ -17,6 +17,10 @@ body {
     padding: 0;
 }
 
+.hidden {
+    display: none;
+}
+
 a {
     color: var(--hl-color-1);
     text-decoration: underline;

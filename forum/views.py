@@ -98,6 +98,8 @@ def post_detail(request, community_slug, post_id):
                 if parent_id:
                     comment.parent_comment = Comment.objects.get(id=parent_id)
                 comment.save()
+                if request.htmx:
+                    return render(request, 'comment.html', {'comment': comment, 'post': post, 'form': CommentForm()})
                 return redirect('post_detail', community_slug=community.slug, post_id=post.id)
         else:
             return redirect('account_login')
@@ -105,6 +107,12 @@ def post_detail(request, community_slug, post_id):
         form = CommentForm()
 
     return render(request, 'post_detail.html', {'post': post, 'comments': comments, 'form': form})
+
+
+def comment_partial(request, comment_id):
+    comment = get_object_or_404(Comment, id=comment_id)
+    return render(request, 'comment.html', {'comment': comment, 'post':comment.post})
+
 
 @login_required
 def edit_post(request, post_id):
@@ -190,6 +198,8 @@ def user_post_detail(request, username, post_id):
                 if parent_id:
                     comment.parent_comment = Comment.objects.get(id=parent_id)
                 comment.save()
+                if request.htmx:
+                    return render(request, 'comment.html', {'comment': comment, 'post': post, 'form': CommentForm()})
                 return redirect('user_post_detail', username=username, post_id=post.id)
         else:
             return redirect('account_login')
