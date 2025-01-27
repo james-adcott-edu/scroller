@@ -21,5 +21,3 @@ class CommentAdmin(admin.ModelAdmin):
     search_fields = ('content',)
     list_filter = ('created_at', 'post')
     ordering = ('-created_at',)
-
-# Register your models here.
