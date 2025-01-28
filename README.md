@@ -84,5 +84,15 @@ For things like simple unit tests it has been useful, but for other things I hav
   - Tools Used: Django TestCase, GitHub Copilot.
   - Features Covered: CRUD operations, user authentication, and accessibility compliance.
 
+### Code Validation
+
+- Passes CSS Validator
+- Passes HTML Validator with the exception of `hx-headers` attribute on body (required for HTMX)
+- Lighthouse Scores:
+  - 95 Performance
+  - 92 Accessibility
+  - 100 Best Practices
+  - 100 SEO
+
 ## Future Enhancements
 - I have left several 'could-have's in the Kanban board's To-do section. Highest priority of those is likely the pagination/infinite scrolling feature as this is where the name idea came from.
