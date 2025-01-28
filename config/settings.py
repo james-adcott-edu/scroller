@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '8000-jamesadcottedu-scroller-dq0hqpcvncv.ws.codeinstitute-ide.net', 'adcott-scroller-60f1d268c506.herokuapp.com' ]
 
