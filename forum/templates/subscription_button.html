@@ -1,5 +1,5 @@
 {% if user in profile.subscribers.all %}
-<button hx-post="{% url 'unsubscribe_profile' profile.id %}" hx-target="this" hx-swap="outerHTML">Unsubscribe</button>
+<button class="btn-bad" hx-post="{% url 'unsubscribe_profile' profile.id %}" hx-target="this" hx-swap="outerHTML">Unsubscribe</button>
 {% else %}
-<button hx-post="{% url 'subscribe_profile' profile.id %}" hx-target="this" hx-swap="outerHTML">Subscribe</button>
+<button class="btn-good" hx-post="{% url 'subscribe_profile' profile.id %}" hx-target="this" hx-swap="outerHTML">Subscribe</button>
 {% endif %}

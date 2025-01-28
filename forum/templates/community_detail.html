@@ -6,7 +6,10 @@
 
 {% block sidebar %}
 <div class="sidebar">
-    <h2>{{ community.name }}</h2>
+    <div style="text-align: center;">
+        <svg width="160" height="160" data-jdenticon-value="comm-{{ community.slug }}"></svg>
+        <h1>{{ community.name }}</h1>
+    </div>
     <p>{{ community.rendered_description|safe }}</p>
     {% if user == community.created_by or user.is_staff %}
         <p><a href="{% url 'edit_community' slug=community.slug %}">Edit Description</a></p>
@@ -18,7 +21,7 @@
     {% endif %}
 
     <hr>
-    <h3>New Post</h3>
+    <h2>New Post</h2>
     {% if user.is_authenticated %}
     <form method="post">
         {% csrf_token %}

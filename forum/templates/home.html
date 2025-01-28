@@ -32,7 +32,7 @@
 {% if subscribed_profiles %}
     <ul>
         {% for profile in subscribed_profiles %}
-            <li><a href="{% url 'profile' profile.user.username %}">{{ profile.user.username }}</a></li>
+            <li><a href="{% url 'profile_view' profile.user.username %}">{{ profile.user.username }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
