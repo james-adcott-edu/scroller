@@ -21,7 +21,7 @@
 {% if subscribed_communities %}
     <ul>
         {% for community in subscribed_communities %}
-            <li>{{ community.name }}</li>
+            <li><a href="{% url 'community_detail' community.slug %}">{{ community.name }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
@@ -32,7 +32,7 @@
 {% if subscribed_profiles %}
     <ul>
         {% for profile in subscribed_profiles %}
-            <li>{{ profile.user.username }}</li>
+            <li><a href="{% url 'profile' profile.user.username %}">{{ profile.user.username }}</a></li>
         {% endfor %}
     </ul>
 {% else %}
