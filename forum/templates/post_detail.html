@@ -4,9 +4,44 @@
 
 {% block content %}
 <div class="post-detail-container">
-    <h2>{{ post.title|escape }}</h2>
-    <p>{{ post.rendered_content|safe }}</p>
-    <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
+    <div class="post_header">
+
+        <div class="icon usericon">
+            <a href="{% url 'profile_view' post.created_by.username %}">
+                <svg width="80" height="80" data-jdenticon-value="user-{{ post.created_by.username }}"></svg>
+                {{ post.created_by.username|escape }}
+            </a>
+        </div>
+        {% if post.community %}
+        <div class="icon communityicon">
+            <a href="{% url 'community_detail' post.community.slug %}">
+                <svg width="80" height="80" data-jdenticon-value="comm-{{ post.community.slug }}"></svg>
+                {{ post.community.name|escape }}
+            </a>
+        </div>
+        {% endif %}
+        <div class="post_listing_meta">
+            <div class="post_listing_title">
+                <a href="{% url 'post_detail' post.community.slug post.id %}">{{ post.title|escape }}</a>
+            </div>
+            <div class="post_listing_datetime">{{ post.created_at }}</div>
+            <div class="post_listing_location">
+                {% if post.community %}
+                <span class="post_listing_community">
+                    Posted in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name|escape }}</a>
+                </span>
+                {% else %}
+                <span class="post_listing_blogtext">Blog post</span>
+                {% endif %}
+                <span class="post_listing_user">
+                    by <a href="{% url 'profile_view' post.created_by.username %}">{{ post.created_by.username|escape }}</a>
+                </span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="post_content">{{ post.rendered_content|safe }}</div>
 
     {% if user.is_authenticated and user == post.created_by or user.is_staff %}
     <div id="author_controls">
