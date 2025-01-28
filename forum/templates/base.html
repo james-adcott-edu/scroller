@@ -29,7 +29,7 @@
                 </ul>
                 <ul id="usernav">
                     {% if user.is_authenticated %}
-                    <li>Logged in as <b>{{ user.username }}</b></li>
+                    <li>Logged in as <a href="{% url 'profile_view' user.username %}"><b>{{ user.username }}</b></a></li>
                     <li><a href="{% url 'account_logout' %}">Logout</a></li>
                     <li><a href="{% url 'create_community' %}">Create Community</a></li>
                     {% else %}
