@@ -7,75 +7,77 @@ I have intentionally aimed for a "retro" website feel (if ~20 years could be con
 
 A conscious decision was made to avoid images, video or any other rich media. There is to my knowledge no binary data being transferred from the server at all. In order to avoid a "wall of text" feel, dynamically created SVG shapes are used as identifying icons for users and communities, allowing for easier reading and navigation.
 
+## Technologies Used
+
+I have opted to use the most recent (at time of development) versions of all software
+
+- Django 5.1.4
+- HTMX 2.0.4
+- jdenticon 3.3.0 (SVG patterns)
+- Markdown & Bleach for minimal text styling
+- \+ various django helper modules (seen in requirements.txt)
+
 ## UX Design Process
-- **Link to User Stories in GitHub Projects:**
-  - [GitHub Projects Kanban Board](https://github.com/users/james-adcott-edu/projects/6)
-- **Wireframes:**
-  - TODO
-- **Design Rationale:**
+
+ User stories are paraphrased in the [GitHub Projects Kanban Board](https://github.com/users/james-adcott-edu/projects/6).
+
+**Design Rationale:**
   - The layout is intentionally kept simple and unintrusive.
   - A mid-dark grey was chosen for the background colour to emphasise reability.
   - Standard browser fonts were kept as they are by default very legible
   - No images, different font sizes or inconsisten spacing is allowed in user input in order to maximise readability
 
-
 ## Key Features
-- **Notice Management:** Create, view, update, and delete notices with ease.
-- **User Authentication:** Secure login/logout functionality for managing user access.
-- **Inclusivity Notes:** 
-  - Designed to be very compatible with screen readers from the ground up. No images means no alt texts, etc.
+
+1. **User Authentication** -- users are able to create accounts, securely login, delete account if required
+2. **Community Management** -- users can create their own communities and post entries into them, or join other people's communities.
+3. **Post Management** -- posts can be created, read, updated and deleted. Posts may contain a limited amount of styling in the form of either Markdown or HTML
+4. **Comments** -- There is a threaded comment section below each post. Posting a comment does not refresh the whole page, instead it is built dynamically. Comments may be edited and deleted by authors and site admins.
+5. **Blogging** -- users may have posts on their profile acting as a blog.
+6. **Subscriptions** -- users may subscribe to communities or individual users' blogs. These posts are consolidated into a feed on the home page.
+7. **auto-generated user icons** -- in the absence of images on the site, users can be identified by distinct SVG patterns associated with their username
+8. **Dynamic updates** -- things like posting comments or subscribing to users/communities utilise HTMX and thus are done without the need for a page refresh.
+
+
+**Inclusivity Notes** -- Designed to be very compatible with screen readers from the ground up. No images means no alt texts, etc.
 
 ## Deployment
 - **Platform:** Heroku
 - **High-Level Deployment Steps:** 
   1. Clone the repository
   2. Set up the Heroku environment with a PostgreSQL database.
-  3. Configure environment variables for sensitive data (e.g., secret keys).
-  4. Deploy using Heroku Git or GitHub integration.
-- **Verification and Validation:**
-  - Tested the deployed application against the development environment for consistent functionality and design.
-  - Verified accessibility using tools such as Lighthouse and manual testing.
-- **Security Measures:**
-  - Sensitive data is stored in environment variables.
-  - DEBUG mode is disabled in the production environment to enhance security.
+  3. Configure SECRET_KEY and DATABASE_URL environment variables
+  4. Deploy using Heroku with GitHub integration.
 
 ## AI Implementation and Orchestration
 
-### Use Cases and Reflections:
-
-Throughout this project, I relied on GitHub Copilot to streamline development and testing. This was my first time using AI tools so extensively, and it became an invaluable collaborator during the process.
+In previous projects I have opted for minimal AI involvement, however in the spirit of the course I decided to attempt to fully embrace it. My usual environment of Vim and inline AI code completion was swapped for VSCode and full-on AI pair programming via Copilot.
 
 - **Code Creation:** 
-  - Reflection: Initially, I was hesitant about how much I could rely on Copilot, but I quickly saw its value in generating boilerplate code, like Django models and CRUD views. Using reverse and multi-step prompts gave me the confidence to explore alternative approaches, and it even taught me new techniques I hadn’t considered before. For instance, it suggested cleaner, more Pythonic ways to handle database queries that saved me time and effort.
-  - Highlight: The iterative back-and-forth with Copilot felt like having a knowledgeable pair programmer by my side. This collaboration made me more thoughtful about how I structured my prompts, as clearer questions led to better answers.
+  - I tried to give Copilot the opportunity of writing most of the code at some point. I quickly learned the importance of clear prompting. I have ended up having to rewrite the bulk of what was supplied as it has a clear tendancy towards being verbose and producing redundant duplicate code. I found asking the AI to improve the code immediately with prompts like "is that the best you can do?" to be suprisingly effective.
 
 - **Debugging:** 
-  - Reflection: Debugging with Copilot was a learning experience in itself. It didn’t just find errors; it often suggested solutions that highlighted gaps in my understanding. I appreciated how it encouraged me to simplify complex logic, making the code easier to maintain and more accessible to anyone who might work on it in the future.
-
-- **Performance and UX Optimization:** 
-  - Reflection: One of my proudest moments came when I used Copilot to refine the Bootstrap styling. I wasn’t very confident in front-end design, but the AI helped bridge that gap. It suggested small, impactful changes, like improving button alignment and tweaking breakpoints, that made the application feel polished and professional. These adjustments also ensured that the app was truly responsive, which was a priority for me.
+  - I found myself debugging the AI code more than the other way around. I did find it useful for problems like "you forgot to include the class at the top of the file" type things.
+  - Pasting errors into the chat field is a nice way of locating problems though.
 
 - **Automated Unit Testing:**
-  - Reflection: Writing unit tests has always been a challenging aspect of development for me, but Copilot turned it into a manageable task. I used question-and-answer and multi-step prompts to generate a solid starting point for my test cases, which I could then refine to align with the project’s requirements. Seeing it anticipate edge cases—like invalid user input—made me more aware of the importance of writing comprehensive tests. This process deepened my understanding of Django’s testing framework and made me more confident in my ability to create robust applications.
+  - I found Copilot reasonably adept at writing simple unit tests for forms/models, only requiring minimal changes.
 
 ### Overall Impact:
-Working with Copilot transformed my workflow. It allowed me to focus on higher-level decisions while handling repetitive tasks efficiently. However, it wasn’t always perfect—some suggestions required significant tweaking to fit my specific needs. Those moments were valuable reminders that the AI wasn’t a replacement for my skills but a tool to enhance them. 
+Overall I wouldn't say AI's impact has been transformative. It has a clear tendancy to hallucinate, make up uneeded functions, randomly change variable names and the like and so requires significant monitoring before any code is allowed to be committed.
 
-Looking back, I feel this experience not only improved my technical abilities but also my problem-solving skills. It pushed me to articulate my ideas clearly (both to the AI and myself) and made me more mindful of inclusivity and accessibility in software design. Above all, it taught me the importance of embracing new technologies as partners in the creative process.
+For things like simple unit tests it has been useful, but for other things I have found that the time taken babysitting the output outweighs the time save by having the machine write it.
 
 
 ## Testing Summary
 - **Manual Testing:**
-  - **Devices and Browsers Tested:** Windows 11 (Chrome, Edge), macOS (Safari), Android, iOS.
+  - **Devices and Browsers Tested:** Linux Chromium and Firefox
   - **Assistive Technologies:** Tested using Lighthouse in the Developer Tools.
   - **Features Tested:** CRUD operations, user authentication, responsive design, and accessibility features.
   - **Results:** All critical features, including accessibility checks, worked as expected.
 - **Automated Testing:**
   - Tools Used: Django TestCase, GitHub Copilot.
   - Features Covered: CRUD operations, user authentication, and accessibility compliance.
-  - Adjustments Made: Additional manual modifications to ensure comprehensive test coverage and inclusivity.
 
 ## Future Enhancements
-- Add a notification feature for upcoming events and deadlines.
-- Build multilingual support for non-English-speaking users.
-- Learn how to build or integrate analytics for tracking user engagement with notices.
+- I have left several 'could-have's in the Kanban board's To-do section. Highest priority of those is likely the pagination/infinite scrolling feature as this is where the name idea came from.
