@@ -11,3 +11,44 @@
         </div>
     {% endif %}
 {% endblock %}
+
+{% block sidebar %}
+<h1>Home</h1>
+
+{% if user.is_authenticated %}
+
+<h2>Subscribed Communities</h2>
+{% if subscribed_communities %}
+    <ul>
+        {% for community in subscribed_communities %}
+            <li>{{ community.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not subscribed to any communities.</p>
+{% endif %}
+
+<h2>Subscribed Profiles</h2>
+{% if subscribed_profiles %}
+    <ul>
+        {% for profile in subscribed_profiles %}
+            <li>{{ profile.user.username }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>You are not subscribed to any profiles.</p>
+{% endif %}
+
+{% else %}
+
+<h2>Welcome to Scroller</h2>
+
+<p>You are not logged in.</p>
+
+<p><a href="{% url 'account_login' %}">Login</a> or <a href="{% url 'account_signup' %}">Sign Up</a> to customise this page, subscribe to communities and blogs and start posting!</p>
+
+{% endif %}
+
+
+
+{% endblock %}

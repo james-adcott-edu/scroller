@@ -71,6 +71,37 @@ header h1 {
     vertical-align: middle;
 }
 
+#mainpage {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+#maincontent {
+    flex: 1 0 0;
+    padding: 20px;
+}
+
+#sidebar {
+    padding-top: 20px;
+    width: 100%; /* Take full width on smaller screens */
+}
+
+#sidebar textarea {
+    max-width: 100%;
+}
+
+@media (min-width: 808px) {
+    #mainpage {
+        flex-direction: row; /* Change to row layout */
+    }
+
+    #sidebar {
+        width: 350px; /* Fixed width for the sidebar */
+    }
+}
+
 .box {
     margin: 1em;
     background: var(--box-bg)

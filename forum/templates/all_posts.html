@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>All Posts</h1>
 {% include 'post_list.html' %}
+{% endblock %}
+
+{% block sidebar %}
+<div class="sidebar">
+    <h1>All Posts</h1>
+    <p>This is a complete list of all community posts and all users' blog posts. All in one place.</p>
+</div>
 {% endblock %}

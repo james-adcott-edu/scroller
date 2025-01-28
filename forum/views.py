@@ -42,10 +42,17 @@ def home(request):
         # Combine the two querysets
         posts = community_posts | user_posts
         posts = posts.distinct().order_by('-created_at')
+        context = {
+            'subscribed_communities': communities,
+            'subscribed_profiles': subscribed_profiles,
+            'posts': posts
+        }
     else:
-        posts = Post.objects.all().order_by('-created_at')
+        context = {
+            'posts': Post.objects.all().order_by('-created_at'),
+        }
     
-    return render(request, 'home.html', {'posts': posts})
+    return render(request, 'home.html', context)
 
 def subscriptions(request):
     if request.user.is_authenticated:

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
 <head>
     <title>Scroller{% if title %} | {{ title }} {% endif %}</title>
     
@@ -36,13 +36,18 @@
             </ul>
         </nav>
     </header>
-    <main>
+    <main id="mainpage">
+        <div id="maincontent">
         {% block content %}
         {% endblock %}
+        </div>
+        {% block nosidebar %}
+        <div id="sidebar">
         {% block sidebar %}
-        {% endblock %}
+        {% endblock sidebar %}
+        </div>
+        {% endblock nosidebar %}
     </main>
-
 
 </body>
 </html>
