@@ -1,6 +1,8 @@
 <!DOCTYPE html>
-<html lang="en-us">
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Scroller{% if title %} | {{ title }} {% endif %}</title>
     
     {% load static %}
@@ -18,23 +20,25 @@
 </head>
 <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
     <header>
-        <h1><a href="{% url 'home' %}">Scroller</a></h1>
-        <nav>
-            <ul id=""sitenav">
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'all_posts' %}">All Posts</a></li>
-            </ul>
-            <ul id="usernav">
-                {% if user.is_authenticated %}
-                <li>Logged in as <b>{{ user.username }}</b></li>
-                <li><a href="{% url 'account_logout' %}">Logout</a></li>
-                <li><a href="{% url 'create_community' %}">Create Community</a></li>
-                {% else %}
-                <li><a href="{% url 'account_login' %}">Login</a></li>
-                <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
-                {% endif %}
-            </ul>
-        </nav>
+        <div id="headercontent">
+            <h1><a href="{% url 'home' %}">Scroller</a></h1>
+            <nav>
+                <ul id=""sitenav">
+                    <li><a href="{% url 'home' %}">Home</a></li>
+                    <li><a href="{% url 'all_posts' %}">All Posts</a></li>
+                </ul>
+                <ul id="usernav">
+                    {% if user.is_authenticated %}
+                    <li>Logged in as <b>{{ user.username }}</b></li>
+                    <li><a href="{% url 'account_logout' %}">Logout</a></li>
+                    <li><a href="{% url 'create_community' %}">Create Community</a></li>
+                    {% else %}
+                    <li><a href="{% url 'account_login' %}">Login</a></li>
+                    <li><a href="{% url 'account_signup' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
     </header>
     <main id="mainpage">
         <div id="maincontent">

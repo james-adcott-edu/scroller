@@ -51,19 +51,25 @@ button.btn-good {
 }
 
 header {
-    display: flex;
-    flex-direction: row;
     background: var(--header-bg);
 }
 
-header ul, header nav {
-    display: flex;
+#headercontent {
+    display: grid;
+    grid-template-columns: min-content auto;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header ul {
+    display: inline-flex;
     flex-direction: row;
-    vertical-align: middle;
+    text-align: right;
 }
 
 header nav {
     flex-grow: 1;
+    text-align: right;
 }
 
 header li {
