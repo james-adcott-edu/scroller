@@ -62,6 +62,9 @@ In previous projects I have opted for minimal AI involvement, however in the spi
   - I found myself debugging the AI code more than the other way around. I did find it useful for problems like "you forgot to include the class at the top of the file" type things.
   - Pasting errors into the chat field is a nice way of locating problems though.
 
+- **Performance and UX Optimization:** 
+  - I asked Copiot to handle the responsive styling for screens over a size. I produced a simple CSS media query that I ended up using the bulk of.
+
 - **Automated Unit Testing:**
   - I found Copilot reasonably adept at writing simple unit tests for forms/models, only requiring minimal changes.
 
