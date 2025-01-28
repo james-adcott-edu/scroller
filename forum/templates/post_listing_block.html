@@ -1,7 +1,17 @@
 <li class="post_listing">
-    <div class="icon usericon"><svg width="80" height="80" data-jdenticon-value="user-{{ post.created_by.username }}"></svg></div>
+    <div class="icon usericon">
+        <a href="{% url 'profile_view' post.created_by.username %}">
+            <svg width="80" height="80" data-jdenticon-value="user-{{ post.created_by.username }}"></svg>
+            {{ post.created_by.username|escape }}
+        </a>
+    </div>
     {% if post.community %}
-    <div class="icon communityicon"><svg width="80" height="80" data-jdenticon-value="comm-{{ post.community.slug }}"></svg></div>
+    <div class="icon communityicon">
+        <a href="{% url 'community_detail' post.community.slug %}">
+            <svg width="80" height="80" data-jdenticon-value="comm-{{ post.community.slug }}"></svg>
+            {{ post.community.name|escape }}
+        </a>
+    </div>
     {% endif %}
     <div class="post_listing_meta">
         <div class="post_listing_title">

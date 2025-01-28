@@ -120,6 +120,17 @@ header h1 {
     background: var(--box-bg)
 }
 
+.icon {
+    font-size: .8em;
+    text-align: center;
+}
+
+.icon a {
+    display: block;
+    color: var(--text-color);
+    text-decoration: none;
+}
+
 .post_listing_title {
     font-size: 1.5rem;
     font-weight: bold;

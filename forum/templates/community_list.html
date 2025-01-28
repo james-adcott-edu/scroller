@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>All Communities</h1>
-
 {% if communities %}
     {% for community in communities %}
         <div class="box community_item">
-            <div class="icon communityicon"><svg width="80" height="80" data-jdenticon-value="comm-{{ community.slug }}"></svg></div>
+            <div class="icon communityicon">
+                <a href="{% url 'community_detail' community.slug %}">
+                    <svg width="80" height="80" data-jdenticon-value="comm-{{ community.slug }}"></svg>
+                    {{ community.name|escape }}
+                </a>
+            </div>
             <div class="post_listing_title"><a href="{% url 'community_detail' community.slug %}">{{ community.name|escape }}</a></div>
             <div>{{ community.rendered_description|safe|truncatechars:100  }}</div>
         </div>
@@ -14,5 +17,12 @@
 {% else %}
     <p>No communities found.</p>
 {% endif %}
+
+{% endblock %}
+
+{% block sidebar %}
+<h1>All Communities</h1>
+
+<p>Not finding what you want? <a href="{% url 'create_community' %}">Create a new community</a>.</p>
 
 {% endblock %}
