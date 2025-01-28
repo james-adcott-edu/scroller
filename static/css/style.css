@@ -114,7 +114,7 @@ header h1 {
     max-width: 100%;
 }
 
-@media (min-width: 808px) {
+@media (min-width: 960px) {
     #mainpage {
         flex-direction: row; /* Change to row layout */
     }
