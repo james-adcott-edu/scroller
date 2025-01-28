@@ -1,21 +1,81 @@
 # Scroller
 
+## Overview
 Scroller is a poorly-named blogging and social networking platform focussing on **text-based** interaction. Its goal is to move away from the image/video heavy direction most sites are going and focus on quick page load times while minimising visual distraction and facilitating easy interaction.
 
-This is a capstone project submission for a Code Institute course, as such it was written quickly in Python/Django with some design stipulations that aren't ideal in terms of usability. *This should not be used in production environments*. I intend to rewrite it in a more scalable manner.
+I have intentionally aimed for a "retro" website feel (if ~20 years could be considered such a thing) with lots of inspiration being taken from circa 2000 LiveJournal. I have opted against an algrithm-based sorting in favour of a simpler "new stuff is at the top" approach.
 
-## Design considerations
+A conscious decision was made to avoid images, video or any other rich media. There is to my knowledge no binary data being transferred from the server at all. In order to avoid a "wall of text" feel, dynamically created SVG shapes are used as identifying icons for users and communities, allowing for easier reading and navigation.
 
-### No images or rich media
+## UX Design Process
+- **Link to User Stories in GitHub Projects:**
+  - [GitHub Projects Kanban Board](https://github.com/users/james-adcott-edu/projects/6)
+- **Wireframes:**
+  - TODO
+- **Design Rationale:**
+  - The layout is intentionally kept simple and unintrusive.
+  - A mid-dark grey was chosen for the background colour to emphasise reability.
+  - Standard browser fonts were kept as they are by default very legible
+  - No images, different font sizes or inconsisten spacing is allowed in user input in order to maximise readability
 
-asdfasdf
+
+## Key Features
+- **Notice Management:** Create, view, update, and delete notices with ease.
+- **User Authentication:** Secure login/logout functionality for managing user access.
+- **Inclusivity Notes:** 
+  - Designed to be very compatible with screen readers from the ground up. No images means no alt texts, etc.
+
+## Deployment
+- **Platform:** Heroku
+- **High-Level Deployment Steps:** 
+  1. Clone the repository
+  2. Set up the Heroku environment with a PostgreSQL database.
+  3. Configure environment variables for sensitive data (e.g., secret keys).
+  4. Deploy using Heroku Git or GitHub integration.
+- **Verification and Validation:**
+  - Tested the deployed application against the development environment for consistent functionality and design.
+  - Verified accessibility using tools such as Lighthouse and manual testing.
+- **Security Measures:**
+  - Sensitive data is stored in environment variables.
+  - DEBUG mode is disabled in the production environment to enhance security.
+
+## AI Implementation and Orchestration
+
+### Use Cases and Reflections:
+
+Throughout this project, I relied on GitHub Copilot to streamline development and testing. This was my first time using AI tools so extensively, and it became an invaluable collaborator during the process.
+
+- **Code Creation:** 
+  - Reflection: Initially, I was hesitant about how much I could rely on Copilot, but I quickly saw its value in generating boilerplate code, like Django models and CRUD views. Using reverse and multi-step prompts gave me the confidence to explore alternative approaches, and it even taught me new techniques I hadn’t considered before. For instance, it suggested cleaner, more Pythonic ways to handle database queries that saved me time and effort.
+  - Highlight: The iterative back-and-forth with Copilot felt like having a knowledgeable pair programmer by my side. This collaboration made me more thoughtful about how I structured my prompts, as clearer questions led to better answers.
+
+- **Debugging:** 
+  - Reflection: Debugging with Copilot was a learning experience in itself. It didn’t just find errors; it often suggested solutions that highlighted gaps in my understanding. I appreciated how it encouraged me to simplify complex logic, making the code easier to maintain and more accessible to anyone who might work on it in the future.
+
+- **Performance and UX Optimization:** 
+  - Reflection: One of my proudest moments came when I used Copilot to refine the Bootstrap styling. I wasn’t very confident in front-end design, but the AI helped bridge that gap. It suggested small, impactful changes, like improving button alignment and tweaking breakpoints, that made the application feel polished and professional. These adjustments also ensured that the app was truly responsive, which was a priority for me.
+
+- **Automated Unit Testing:**
+  - Reflection: Writing unit tests has always been a challenging aspect of development for me, but Copilot turned it into a manageable task. I used question-and-answer and multi-step prompts to generate a solid starting point for my test cases, which I could then refine to align with the project’s requirements. Seeing it anticipate edge cases—like invalid user input—made me more aware of the importance of writing comprehensive tests. This process deepened my understanding of Django’s testing framework and made me more confident in my ability to create robust applications.
+
+### Overall Impact:
+Working with Copilot transformed my workflow. It allowed me to focus on higher-level decisions while handling repetitive tasks efficiently. However, it wasn’t always perfect—some suggestions required significant tweaking to fit my specific needs. Those moments were valuable reminders that the AI wasn’t a replacement for my skills but a tool to enhance them. 
+
+Looking back, I feel this experience not only improved my technical abilities but also my problem-solving skills. It pushed me to articulate my ideas clearly (both to the AI and myself) and made me more mindful of inclusivity and accessibility in software design. Above all, it taught me the importance of embracing new technologies as partners in the creative process.
 
 
-### onsistent formatting
+## Testing Summary
+- **Manual Testing:**
+  - **Devices and Browsers Tested:** Windows 11 (Chrome, Edge), macOS (Safari), Android, iOS.
+  - **Assistive Technologies:** Tested using Lighthouse in the Developer Tools.
+  - **Features Tested:** CRUD operations, user authentication, responsive design, and accessibility features.
+  - **Results:** All critical features, including accessibility checks, worked as expected.
+- **Automated Testing:**
+  - Tools Used: Django TestCase, GitHub Copilot.
+  - Features Covered: CRUD operations, user authentication, and accessibility compliance.
+  - Adjustments Made: Additional manual modifications to ensure comprehensive test coverage and inclusivity.
 
-asdfgasdf
-
-
-### No javascript reliance
-
-asdfasdf
+## Future Enhancements
+- Add a notification feature for upcoming events and deadlines.
+- Build multilingual support for non-English-speaking users.
+- Learn how to build or integrate analytics for tracking user engagement with notices.
