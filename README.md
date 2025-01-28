@@ -78,11 +78,11 @@ For things like simple unit tests it has been useful, but for other things I hav
 - **Manual Testing:**
   - **Devices and Browsers Tested:** Linux Chromium and Firefox
   - **Assistive Technologies:** Tested using Lighthouse in the Developer Tools.
-  - **Features Tested:** CRUD operations, user authentication, responsive design, and accessibility features.
-  - **Results:** All critical features, including accessibility checks, worked as expected.
+  - **Features Tested:** CRUD operations, user authentication, responsive design.
+  - **Results:** All critical features worked as expected.
 - **Automated Testing:**
   - Tools Used: Django TestCase, GitHub Copilot.
-  - Features Covered: CRUD operations, user authentication, and accessibility compliance.
+  - Features Covered: CRUD operations, user authentication.
 
 ### Code Validation
 
