@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', '8000-jamesadcottedu-scroller-dq0hqpcvncv.ws.codeinstitute-ide.net']
 
-CSRF_TRUSTED_ORIGINS = ['https://8000-jamesadcottedu-scroller-dq0hqpcvncv.ws.codeinstitute-ide.net']
+CSRF_TRUSTED_ORIGINS = ['https://8000-jamesadcottedu-scroller-dq0hqpcvncv.ws.codeinstitute-ide.net', 'https://*.herokuapp.com']
 
 if os.path.isfile('env.py'):
     import env
