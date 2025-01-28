@@ -21,4 +21,5 @@ urlpatterns = [
     path('profile/<int:profile_id>/subscribe/', views.subscribe_profile, name='subscribe_profile'),
     path('profile/<int:profile_id>/unsubscribe/', views.unsubscribe_profile, name='unsubscribe_profile'),
     path('subscriptions/', views.subscriptions, name='subscriptions'),  # List subscriptions
+    path('communities/', views.community_list, name='community_list'), # List all communities
 ]

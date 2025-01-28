@@ -6,12 +6,12 @@
     <p>{{ post.rendered_content|safe }}</p>
     <p>Posted by {{ post.created_by.username }} in <a href="{% url 'community_detail' post.community.slug %}">{{ post.community.name }}</a> on {{ post.created_at }}</p>
 
+    {% if user.is_authenticated and user == post.created_by or user.is_staff %}
     <div id="author_controls">
-        {% if user.is_authenticated and user == post.created_by or user.is_staff %}
         <a href="{% url 'edit_post' post.id %}">Edit</a> |
         <a href="{% url 'delete_post' post.id %}">Delete</a>
-        {% endif %}
     </div>
+    {% endif %}
 
     {% include 'comments_section.html' %}
 </div>

@@ -7,6 +7,10 @@
 <form method="post">
     {% csrf_token %}
     <button type="submit">Delete</button>
+    {% if comment.post.community %}
     <a href="{% url 'post_detail' comment.post.community.slug comment.post.id %}">Cancel</a>
+    {% else %}
+    <a href="{% url 'user_post_detail' comment.post.created_by.username comment.post.id %}">Cancel</a>
+    {% endif %}
 </form>
 {% endblock %}

@@ -14,13 +14,15 @@
     <div class="reply-form hidden" id="reply-form-{{ comment.id }}">
         {% if post.community %}
         <form method="post" action="{% url 'post_detail' post.community.slug post.id %}"
-        hx-post="{% url 'post_detail' post.community.slug post.id %}"
-        hx-target="#replies-{{ comment.id }}"
-        hx-swap="afterbegin"
-        hx-on::after-request=" if(event.detail.successful) {this.reset(); this.parentNode.classList.toggle('hidden')}">
+            hx-post="{% url 'post_detail' post.community.slug post.id %}"
         {% else %}
-        <form method="post" action="{% url 'user_post_detail' post.created_by.username post.id %}"hx-post="{% url 'user_post_detail' post.created_by.username post.id %}" hx-target="#replies-{{ comment.id }}" hx-swap="afterbegin">
+        <form method="post" action="{% url 'user_post_detail' post.created_by.username post.id %}"
+            hx-post="{% url 'user_post_detail' post.created_by.username post.id %}"
         {% endif %}
+            hx-target="#replies-{{ comment.id }}"
+            hx-swap="afterbegin"
+            hx-on::after-request=" if(event.detail.successful) {this.reset(); this.parentNode.classList.toggle('hidden'); refreshComments();}">
+        
             {% csrf_token %}
             {{ form.as_p }}
             <input type="hidden" name="parent_id" value="{{ comment.id }}">

@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% include 'post_list.html' %}
+    {% if posts %}
+        {% include 'post_list.html' %}
+    {% else %}
+        <div class="box">
+            <h1>Welcome to Scroller</h1>
+            <p>Your home page is currently empty as you have not subscribed to any communities or blogs.</p>
+            <p>If you want to see the current activity throughout the site, you may view <a href="{% url 'all_posts' %}">a stream of all posts</a>, or if you want to browse communities you may find <a href="{% url 'community_list' %}">a list of communities here</a>.</p>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -43,19 +43,6 @@
         {% endblock %}
     </main>
 
-    <script>
-        function refreshComments() {
-            document.querySelectorAll('.reply-link').forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    const commentId = this.dataset.commentId;
-                    document.getElementById('reply-form-' + commentId).classList.toggle('hidden');
-                });
-            });
-            jdenticon();
-        }
 
-        refreshComments();
-    </script>
 </body>
 </html>

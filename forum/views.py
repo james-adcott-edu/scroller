@@ -67,6 +67,12 @@ def subscriptions(request):
     
     return render(request, 'subscriptions.html', context)
 
+
+def community_list(request):
+    communities = Community.objects.all()
+    return render(request, 'community_list.html', {'communities': communities})
+
+
 def subscribe_profile(request, profile_id):
     profile = get_object_or_404(Profile, id=profile_id)
     if request.user.is_authenticated:
@@ -182,7 +188,9 @@ def edit_post(request, post_id):
         form = PostForm(request.POST, instance=post)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', post_id=post.id)
+            if post.community:
+                return redirect('post_detail', community_slug=post.community.slug, post_id=post.id)
+            return redirect('user_post_detail',  username=post.created_by.username, post_id=post.id)
     else:
         form = PostForm(instance=post)
     return render(request, 'edit_post.html', {'form': form, 'post': post})
@@ -192,20 +200,24 @@ def delete_post(request, post_id):
     post = get_object_or_404(Post, id=post_id, created_by=request.user)
     if request.method == 'POST':
         post.delete()
-        return redirect('all_posts')
+        return redirect('home')
     return render(request, 'delete_post.html', {'post': post})
 
 @login_required
 def edit_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.user != comment.created_by and not request.user.is_staff:
-        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        if comment.post.community:
+            return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        return redirect('user_post_detail',  username=comment.post.created_by.username, post_id=comment.post.id)
 
     if request.method == 'POST':
         form = CommentForm(request.POST, instance=comment)
         if form.is_valid():
             form.save()
-            return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+            if comment.post.community:
+                return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+            return redirect('user_post_detail',  username=comment.post.created_by.username, post_id=comment.post.id)
     else:
         form = CommentForm(instance=comment)
 
@@ -215,11 +227,15 @@ def edit_comment(request, comment_id):
 def delete_comment(request, comment_id):
     comment = get_object_or_404(Comment, id=comment_id)
     if request.user != comment.created_by and not request.user.is_staff:
-        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        if comment.post.community:
+            return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        return redirect('user_post_detail',  username=comment.post.created_by.username, post_id=comment.post.id)
 
     if request.method == 'POST':
         comment.delete()
-        return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        if comment.post.community:
+            return redirect('post_detail', community_slug=comment.post.community.slug, post_id=comment.post.id)
+        return redirect('user_post_detail',  username=comment.post.created_by.username, post_id=comment.post.id)
 
     return render(request, 'delete_comment.html', {'comment': comment})
 
