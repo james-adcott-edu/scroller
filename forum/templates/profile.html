@@ -16,7 +16,7 @@
     {% endif %}
 
     {% if user.is_authenticated %}
-    {% include 'subscription_button.html' %}
+        <div style="text-align: center">{% include 'subscription_button.html' %}</div>
     {% endif %}
 
     {% if user.is_authenticated and user == profile.user %}

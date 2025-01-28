@@ -17,7 +17,7 @@
     <p>Created by {{ community.created_by.username }} on {{ community.created_at }}</p>
 
     {% if user.is_authenticated %}
-        {% include 'community_subscription_button.html' %}
+        <div style="text-align: center">{% include 'community_subscription_button.html' %}</div>
     {% endif %}
 
     <hr>
