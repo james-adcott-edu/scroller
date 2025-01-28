@@ -5,7 +5,9 @@ urlpatterns = [
     path('', views.home, name='home'),  # Home page
     path('all/', views.all_posts, name='all_posts'),  # All posts
     path('accounts/', include('allauth.urls')),  # Add this line for allauth
-    path('create_community/', views.create_community, name='create_community'),
+    path('delete_account/', views.delete_account, name='delete_account'), # Account deletion
+    path('create_community/', views.create_community, name='create_community'), # Create community
+    path('community/<slug:slug>/edit/', views.edit_community, name='edit_community'), # Edit commuinity description
     path('c/<slug:slug>/', views.community_detail, name='community_detail'),
     path('c/<slug:community_slug>/<int:post_id>/', views.post_detail, name='post_detail'),
     path('u/<str:username>/', views.profile_view, name='profile_view'),  # Profile view

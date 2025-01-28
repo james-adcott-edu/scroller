@@ -8,6 +8,9 @@
 <div class="sidebar">
     <h2>{{ community.name }}</h2>
     <p>{{ community.rendered_description|safe }}</p>
+    {% if user == community.created_by or user.is_staff %}
+        <p><a href="{% url 'edit_community' slug=community.slug %}">Edit Description</a></p>
+    {% endif %}
     <p>Created by {{ community.created_by.username }} on {{ community.created_at }}</p>
 
     {% if user.is_authenticated %}

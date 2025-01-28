@@ -30,10 +30,6 @@ a:visited {
     color: var(--hl-color-2);
 }
 
-.comment > .replies {
-    margin-left: 20px;
-}
-
 header {
     display: flex;
     flex-direction: row;
@@ -161,4 +157,23 @@ header h1 {
 
 .community_item .communityicon {
     grid-row: 1 / span 2;
+}
+
+.comment {
+    margin-top: 1em;
+    border-left: 3px solid var(--box-bg);
+}
+
+.commentheader {
+    display: grid;
+    grid-template-columns: 100px auto;
+    background-color: var(--box-bg);
+}
+
+.commentbody {
+    padding: 5px;
+}
+
+.comment > .replies {
+    margin-left: 20px;
 }

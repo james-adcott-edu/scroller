@@ -1,26 +1,30 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import CommunityForm, PostForm, ProfileForm, CommentForm
+from .forms import CommunityForm, PostForm, ProfileForm, CommentForm, CommunityEditForm
 from .models import Community, Post, Profile, Comment
+from django.contrib import messages
 
 
 
 def is_admin(user):
     return user.is_staff
+
+
+@login_required
+def delete_account(request):
+    if request.method == 'POST':
+        user = request.user
+        user.delete()
+        messages.success(request, "Your account has been deleted successfully.")
+        return redirect('home')
+    return render(request, 'delete_account.html')
     
 
 def all_posts(request):
     posts = Post.objects.all().order_by('-created_at')
     return render(request, 'all_posts.html', {'posts': posts, 'title': 'All Posts'})
 
-'''def home(request):
-    if request.user.is_authenticated:
-        communities = request.user.subscribed_communities.all()
-        posts = Post.objects.filter(community__in=communities).order_by('-created_at')
-    else:
-        posts = Post.objects.all().order_by('-created_at')
-    return render(request, 'home.html', {'posts': posts})'''
 
 def home(request):
     if request.user.is_authenticated:
@@ -116,6 +120,25 @@ def create_community(request):
         form = CommunityForm()
     
     return render(request, 'create_community.html', {'form': form})
+
+
+@login_required
+def edit_community(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    
+    # Check if the current user is the creator of the community
+    if request.user != community.created_by and is_admin(request.user) == False:
+        return redirect('community_detail', slug=community.slug)
+
+    if request.method == 'POST':
+        form = CommunityEditForm(request.POST, instance=community)
+        if form.is_valid():
+            form.save()
+            return redirect('community_detail', slug=community.slug)
+    else:
+        form = CommunityEditForm(instance=community)
+
+    return render(request, 'edit_community.html', {'form': form, 'community': community})
 
 
 def community_detail(request, slug):

@@ -1,36 +1,50 @@
 <div class="comment">
-    <div class="icon usericon"><svg width="80" height="80" data-jdenticon-value="user-{{ comment.created_by.username }}"></svg></div>
-    <p><strong>{{ comment.created_by.username }}</strong> said: {{ comment.rendered_content|safe }}</p>
-    <p>Posted on {{ comment.created_at }}</p>
-    {% if user == comment.created_by or user.is_staff %}
-        <a href="{% url 'edit_comment' comment.id %}">Edit</a>
-        <a href="{% url 'delete_comment' comment.id %}">Delete</a>
-    {% endif %}
-
-    {% if user.is_authenticated %}
-    <a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>
-    {% endif %}
-
-    <div class="reply-form hidden" id="reply-form-{{ comment.id }}">
-        {% if post.community %}
-        <form method="post" action="{% url 'post_detail' post.community.slug post.id %}"
-            hx-post="{% url 'post_detail' post.community.slug post.id %}"
-        {% else %}
-        <form method="post" action="{% url 'user_post_detail' post.created_by.username post.id %}"
-            hx-post="{% url 'user_post_detail' post.created_by.username post.id %}"
-        {% endif %}
-            hx-target="#replies-{{ comment.id }}"
-            hx-swap="afterbegin"
-            hx-on::after-request=" if(event.detail.successful) {this.reset(); this.parentNode.classList.toggle('hidden'); refreshComments();}">
-        
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="hidden" name="parent_id" value="{{ comment.id }}">
-            <button type="submit">Reply</button>
-        </form>
+    <div class="commentheader">
+        <div class="icon usericon">
+            <a href="{% url 'profile_view' comment.created_by.username %}">
+                <svg width="80" height="80" data-jdenticon-value="user-{{ comment.created_by.username }}"></svg>
+                {{ comment.created_by.username|escape }}
+            </a>
+        </div>
+        <div class="commentmeta">
+            <div class="commentauthor">Comment from <strong>{{ comment.created_by.username }}</strong></div>
+            <div class="commentdatetime">Posted on {{ comment.created_at }}</div>
+            <div class="commentcontrols">
+                {% if user == comment.created_by or user.is_staff %}
+                [<a href="{% url 'edit_comment' comment.id %}">Edit</a>]
+                [<a href="{% url 'delete_comment' comment.id %}">Delete</a>]
+                {% endif %}
+            </div>
+        </div>
     </div>
+    <div class="commentbody">{{ comment.rendered_content|safe }}</div>
+    <div class="commentreply">
+        {% if user.is_authenticated %}
+        [<a href="#" class="reply-link" data-comment-id="{{ comment.id }}">Reply</a>]
+        {% endif %}
+    </div>
+
     
     <div class="replies" id="replies-{{ comment.id }}">
+        <div class="reply-form hidden" id="reply-form-{{ comment.id }}">
+            {% if post.community %}
+            <form method="post" action="{% url 'post_detail' post.community.slug post.id %}"
+                hx-post="{% url 'post_detail' post.community.slug post.id %}"
+            {% else %}
+            <form method="post" action="{% url 'user_post_detail' post.created_by.username post.id %}"
+                hx-post="{% url 'user_post_detail' post.created_by.username post.id %}"
+            {% endif %}
+                hx-target="#replies-{{ comment.id }}"
+                hx-swap="afterbegin"
+                hx-on::after-request=" if(event.detail.successful) {this.reset(); this.parentNode.classList.toggle('hidden'); refreshComments();}">
+            
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                <button type="submit">Reply</button>
+            </form>
+        </div>
+
         {% for reply in comment.replies.all %}
             {% include 'comment.html' with comment=reply %}
         {% endfor %}
