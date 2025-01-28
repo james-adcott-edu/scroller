@@ -1,1 +1,1 @@
-web: gunicorn scroller.wsgi
+web: gunicorn config.wsgi
