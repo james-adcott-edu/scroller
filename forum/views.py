@@ -101,6 +101,22 @@ def unsubscribe_profile(request, profile_id):
     return redirect('login')
 
 
+def subscribe(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    if request.user.is_authenticated:
+        community.subscribers.add(request.user)
+        community.save()
+        return render(request, 'community_subscription_button.html', {'user': request.user, 'community': community})
+    return redirect('login')
+
+def unsubscribe(request, slug):
+    community = get_object_or_404(Community, slug=slug)
+    if request.user.is_authenticated:
+        community.subscribers.remove(request.user)
+        community.save()
+        return render(request, 'community_subscription_button.html', {'user': request.user, 'community': community})
+    return redirect('login')
+
 @login_required
 def create_community(request):
     if request.method == 'POST':
@@ -165,17 +181,6 @@ def community_detail(request, slug):
     return render(request, 'community_detail.html', {'community': community, 'posts': posts, 'form': form, 'is_subscribed': is_subscribed})
 
 
-@login_required
-def subscribe(request, slug):
-    community = get_object_or_404(Community, slug=slug)
-    community.subscribers.add(request.user)
-    return redirect('community_detail', slug=slug)
-
-@login_required
-def unsubscribe(request, slug):
-    community = get_object_or_404(Community, slug=slug)
-    community.subscribers.remove(request.user)
-    return redirect('community_detail', slug=slug)
 
 
 

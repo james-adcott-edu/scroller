@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="commentmeta">
-            <div class="commentauthor">Comment from <strong>{{ comment.created_by.username }}</strong></div>
+            <div class="commentauthor">Comment from <a href="{% url 'profile_view' comment.created_by.username %}">{{ comment.created_by.username }}</a></div>
             <div class="commentdatetime">Posted on {{ comment.created_at }}</div>
             <div class="commentcontrols">
                 {% if user == comment.created_by or user.is_staff %}

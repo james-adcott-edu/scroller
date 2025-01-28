@@ -1,0 +1,5 @@
+{% if user in community.subscribers.all %}
+<button class="btn-bad" hx-post="{% url 'unsubscribe' community.slug %}" hx-target="this" hx-swap="outerHTML">Unsubscribe</button>
+{% else %}
+<button class="btn-good" hx-post="{% url 'subscribe' community.slug %}" hx-target="this" hx-swap="outerHTML">Subscribe</button>
+{% endif %}
